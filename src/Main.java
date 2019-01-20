@@ -1,113 +1,58 @@
 import java.io.File;
+import java.util.Arrays;
 
 class Main 
 {
-    /**
-     * Challange is to write an algorithm that has a complexity of O(N)
-     * @param big not null not empty int array
-     * @param small not null not empty int array
-     * @return if small array is contained in small array true else false
-     */
-    public static boolean contains(int[] big, int[] small)
+
+    public static class A 
     {
-        if (big.length < small.length)
-            return false;
-        
-        int bp1 = 0;
-        int bp2 = 0;
-        int sp = 0;
-        boolean inside = false;
+        public int a;
+    }
 
-        while (true)
+    public static void faa(A a, A b)
+    {
+        a = b;
+    }
+
+    public static void foo(int[] a)
+    {
+        final int size = a.length;
+
+        for (int i = 0; i < size / 2; i++)
         {
-            if (sp == small.length)
-                return true;
-            
-            if (bp1 == big.length)
-                return false;
-
-            if (big[bp1] == small[sp])
-            {
-                if (inside)
-                {
-                    bp1++;
-                    sp++;
-                }
-                else 
-                {
-                    bp1++;
-                    bp2 = bp1;
-                    inside = true;
-                    sp++;
-                }
-            }
-            else 
-            {
-                if (inside)
-                {
-                    inside = false;
-                    sp = 0;
-                    bp1 = bp2;
-                }
-                else 
-                {
-                    bp1++;
-                    bp2++;
-                }
-            }
+            int tmp = a[i];
+            a[i] = a[size - 1 - i];
+            a[size - 1 - i] = tmp;   
         }
     }
 
-    /**
-     * Complexity: O(N^2)
-     * @param con
-     * @return
-     */
-    public static int containerONN(int[] con)
+    public static int binarySearch(int[] a, int v)
     {
-        int p1 = 0;
-        int p2 = 0;
-        int area = 0;
+        int l = 0, r = a.length - 1, m = 0;
 
-        while (p1 < con.length)
+        while (l < r)
         {
-            p2 = p1 + 1;
-
-            while (p2 < con.length)
-            {                
-                int tempArea = (p2 - p1) * (con[p1] < con[p2] ? con[p1] : con[p2]);
-
-                if (area < tempArea)
-                    area = tempArea;
-                p2++;
-            }
-            p1++;
+            m = (l + r) / 2;
+            if (a[m] < v)
+                r = m - 1;
+            else if (a[m] > v)
+                l = m + 1;
+            else
+                return m;
         }
 
-        return area;
+        return -1;
     }
 
-    public static int containerON(int[] height)
-    {
-        int left = 0;
-        int right = height.length - 1;
-        int area = 0;
-
-        while (left < right)
-        {
-            area = Math.max(area, (right - left) * Math.min(height[left], height[right]));
-
-            if (height[left] < height[right])
-                left++;
-            else    
-                right--;
-        }
-
-        return area;
-    }
 
     public static void main(String[] args)
     {
+        int[] array = new int[] {1, 2, 3, 3, 5, 6, 7};
+
+        System.out.println(binarySearch(array, 4));
+
+
+        /*
         CSVReader.CSVMatrix matrix = new CSVReader(new File("./res/lol.csv")).readMatrix();
         System.out.println(matrix.query((String[] row) -> Integer.valueOf(row[0]) >= 3));
 
@@ -116,5 +61,6 @@ class Main
 
 
         System.out.println("Hello World!");
+        */
     }
 }
