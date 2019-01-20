@@ -192,19 +192,24 @@ public class CSVReader
             String rawLine = __reader.readLine();
 
             if (rawLine == null || rawLine == "")
+            {
+                __reader.close();
                 return null;
+            }
 
             if (rawLine.contains(","))
                 array = rawLine.split(",");
             else
                 array = new String[] {rawLine};
+            
+            return array;
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            return null;
         }
-        return array;
+
+        return null;
     }
 
     /**
@@ -240,13 +245,16 @@ public class CSVReader
             for (int i = 0; i < list.size(); i++)
                 matrix.alterRow(i, list.get(i));
 
+            __reader.close();
+
+            return matrix;
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            return null;
         }
-        return matrix;
+
+        return null;
     }
 
     /**
